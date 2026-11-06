@@ -50,7 +50,7 @@
     function tether(dx, dy) {
       var d = Math.sqrt(dx * dx + dy * dy);
       if (d === 0) return [0, 0];
-      var reach = Math.max(window.innerWidth, window.innerHeight) * 0.6;
+      var reach = Math.max(window.innerWidth, window.innerHeight) * 1.8;
       var k = 1 / (1 + d / reach);
       return [dx * k, dy * k];
     }

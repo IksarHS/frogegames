@@ -1,0 +1,186 @@
+/* Froge site styles. Type roles follow the 2026 Brand Kit (page 19):
+   Gabarito Black for the logo only, Gabarito Bold for headers,
+   Figtree Regular and Bold for body text, DM Mono for labels. */
+@font-face { font-family: "Gabarito"; src: url("fonts/gabarito.woff2") format("woff2"); font-weight: 400 900; font-display: block; }
+@font-face { font-family: "Figtree"; src: url("fonts/figtree.woff2") format("woff2"); font-weight: 300 900; font-display: swap; }
+@font-face { font-family: "DM Mono"; src: url("fonts/dm-mono-400.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "DM Mono"; src: url("fonts/dm-mono-500.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+
+:root {
+  --paper: #1a1b1d;
+  --ink: #EEECE5;
+  --soft: #9C9A92;
+  --rule: #33322E;
+  --display: "Gabarito", system-ui, sans-serif;
+  --body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "DM Mono", ui-monospace, Menlo, Consolas, monospace;
+  --pb: clamp(28px, 7vh, 72px);
+  --pi: clamp(24px, 6vw, 88px);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  background-color: var(--paper);
+  color: var(--ink);
+  font: 400 18px/1.55 var(--body);
+  -webkit-font-smoothing: antialiased;
+}
+/* Brand Kit "fingerprint rings" texture. Fixed so long pages scroll over it. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: url("fingerprint.svg") 72% 66% / cover no-repeat;
+}
+p, h1, h2, ul { margin: 0; }
+h1, h2 { font-family: var(--display); font-weight: 700; text-wrap: balance; }
+strong { font-weight: 700; }
+a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--soft);
+  transition: text-decoration-color .2s;
+}
+a:hover, a:focus-visible { text-decoration-color: currentColor; }
+a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; border-radius: 2px; }
+
+/* Shared page frame */
+main {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(32px, 6vh, 56px);
+  padding: max(var(--pb), env(safe-area-inset-top)) max(var(--pi), env(safe-area-inset-right)) max(24px, env(safe-area-inset-bottom)) max(var(--pi), env(safe-area-inset-left));
+}
+.site-foot {
+  margin-top: auto;
+  font: 400 13px/1.5 var(--mono);
+  color: var(--soft);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  width: fit-content;
+}
+.site-foot a { color: var(--ink); }
+
+/* Home: the wordmark. Live text so the period can be its own draggable element.
+   Box matches the baked SVG (viewBox 15 -699 2527.12 901, 1000 units per em). */
+.logo {
+  --lw: clamp(190px, 36vw, 400px);
+  width: var(--lw);
+  max-width: 100%;
+  aspect-ratio: 2527.12 / 901;
+  position: relative;
+  display: block;
+  flex: none;
+  font-size: calc(var(--lw) * 0.395707);
+  --logo: #f2f0eb;
+}
+.froge-logo {
+  position: absolute;
+  top: 0;
+  left: -.015em;
+  font-family: "Gabarito", sans-serif;
+  font-weight: 900;
+  line-height: 0;
+  letter-spacing: -.035em;
+  font-kerning: none;
+  font-feature-settings: "kern" 0, "liga" 0;
+  color: var(--logo);
+  white-space: nowrap;
+  -webkit-user-select: none;
+  user-select: none;
+}
+/* zero-width strut puts the baseline .699em below the top, independent of font metrics */
+.froge-logo .strut { display: inline-block; width: 0; height: .699em; }
+.froge-logo .e { margin-left: -.027em; }
+.froge-logo .dot {
+  display: inline-block;
+  position: relative;
+  width: .3em;
+  height: .3em;
+  margin-left: .02em;
+  vertical-align: -.035em;
+}
+.froge-logo .layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+  will-change: transform;
+}
+.froge-period-hit {
+  position: absolute;
+  inset: -24px;
+  z-index: 20;
+  cursor: grab;
+  touch-action: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.froge-period-hit.is-dragging { cursor: grabbing; }
+.bursts {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.burst {
+  position: absolute;
+  left: 0;
+  top: 0;
+  overflow: visible;
+  will-change: transform, opacity;
+}
+
+/* Desktop: a bigger wordmark, with the whole block centered in the screen height. */
+@media (min-width: 900px) {
+  .logo { --lw: clamp(420px, min(40vw, 68vh), 640px); margin-top: auto; }
+}
+
+/* Home: what Froge is */
+.intro {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  max-width: 38rem;
+}
+.intro h1 {
+  font-size: clamp(34px, 5.2vw, 58px);
+  line-height: 1.04;
+  letter-spacing: -.02em;
+}
+.lede { max-width: 34rem; font-size: clamp(18px, 1.5vw, 20px); }
+/* Privacy page */
+.brand-link { display: block; width: 124px; flex: none; }
+.brand-link img { display: block; width: 100%; height: auto; }
+.policy {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  max-width: 40rem;
+}
+.policy-head { display: flex; flex-direction: column; gap: 12px; }
+.policy-head h1 { font-size: clamp(34px, 5vw, 52px); line-height: 1.06; letter-spacing: -.02em; }
+.label { font: 400 13px/1.5 var(--mono); color: var(--soft); }
+.policy section { display: flex; flex-direction: column; gap: 12px; }
+.policy h2 { font-size: 24px; line-height: 1.2; letter-spacing: -.01em; }
+.policy ul { padding-left: 1.2em; display: flex; flex-direction: column; gap: 8px; }
+
+/* Home: the arcade score. Counts for this visit only; nothing is saved. */
+.score{position:absolute;right:max(var(--pi),env(safe-area-inset-right));top:max(var(--pb),env(safe-area-inset-top));display:flex;gap:clamp(20px,3vw,44px);font:400 12px/1.3 "DM Mono",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--soft);pointer-events:none;text-align:right}
+.score b{display:block;margin-top:6px;font:400 clamp(24px,2.4vw,34px)/1 "DM Mono",monospace;letter-spacing:.04em;color:var(--ink);font-variant-numeric:tabular-nums}
+.score b.hit{color:#f25c33}.score .sea.hit{color:#a6e3d0}
+/* Phones and small tablets: the logo sits lower, near the middle, and gives the space back on short screens. */
+@media (max-width:899px){.logo{margin-top:clamp(0px,calc(100svh - 500px),34svh)}}

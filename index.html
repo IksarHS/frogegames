@@ -3,138 +3,43 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>froge</title>
+<title>Froge, LLC | A small game studio in California</title>
+<meta name="description" content="Froge, LLC is a small game studio in California. We're making games with our favorite people.">
 <link rel="canonical" href="https://frogegames.com/">
-<meta name="theme-color" content="#F2F0E9" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#161614" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#1a1b1d">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500&display=swap">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gabarito:wght@900&display=block">
-<style>
-  :root {
-    --paper: #F2F0E9;
-    --ink: #1C1C1A;
-    --soft: #6B6A63;
-    --rule: #D9D6CC;
-    color-scheme: light;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root { --paper: #1a1b1d; --ink: #EEECE5; --soft: #9C9A92; --rule: #33322E; color-scheme: dark; }
-    body {
-      background-image: radial-gradient(rgba(242, 240, 235, .09) 1.2px, transparent 1.6px);
-      background-size: 26px 26px;
-    }
-  }
-  * { box-sizing: border-box; }
-  html, body { margin: 0; height: 100%; }
-  body {
-    background: var(--paper);
-    color: var(--ink);
-    font: 400 17px/1.5 "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
-    -webkit-font-smoothing: antialiased;
-  }
-  main {
-    min-height: 100vh;
-    min-height: 100svh;
-    display: grid;
-    grid-template-rows: 1fr;
-    --pb: clamp(28px, 7vh, 80px);
-    --pi: clamp(24px, 6vw, 88px);
-    padding: max(var(--pb), env(safe-area-inset-top)) max(var(--pi), env(safe-area-inset-right)) max(var(--pb), env(safe-area-inset-bottom)) max(var(--pi), env(safe-area-inset-left));
-  }
-  /* Hero wordmark: live text so the period can be its own draggable element.
-     Box matches the baked SVG (viewBox 15 -699 2527.12 901, 1000 units per em). */
-  .logo {
-    --lw: clamp(240px, 46vw, 620px);
-    align-self: center;
-    width: var(--lw);
-    aspect-ratio: 2527.12 / 901;
-    position: relative;
-    display: block;
-    font-size: calc(var(--lw) * 0.395707);
-    --logo: #1a1b1d;
-  }
-  @media (prefers-color-scheme: dark) { .logo { --logo: #f2f0eb; } }
-  .froge-logo {
-    position: absolute;
-    top: 0;
-    left: -.015em;
-    font-family: "Gabarito", sans-serif;
-    font-weight: 900;
-    line-height: 0;
-    letter-spacing: -.035em;
-    font-kerning: none;
-    font-feature-settings: "kern" 0, "liga" 0;
-    color: var(--logo);
-    white-space: nowrap;
-    -webkit-user-select: none;
-    user-select: none;
-  }
-  /* zero-width strut puts the baseline .699em below the top, independent of font metrics */
-  .froge-logo .strut { display: inline-block; width: 0; height: .699em; }
-  .froge-logo .e { margin-left: -.027em; }
-  .froge-logo .dot {
-    display: inline-block;
-    position: relative;
-    width: .3em;
-    height: .3em;
-    margin-left: .02em;
-    vertical-align: -.035em;
-  }
-  .froge-logo .layer {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    overflow: visible;
-    pointer-events: none;
-    will-change: transform;
-  }
-  .froge-period-hit {
-    position: absolute;
-    inset: -24px;
-    z-index: 20;
-    cursor: grab;
-    touch-action: none;
-    -webkit-touch-callout: none;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .froge-period-hit.is-dragging { cursor: grabbing; }
-  main { position: relative; z-index: 1; }
-  .bursts {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    overflow: hidden;
-    pointer-events: none;
-  }
-  .burst {
-    position: absolute;
-    left: 0;
-    top: 0;
-    overflow: visible;
-    will-change: transform, opacity;
-  }
-  p { margin: 0; }
-  a {
-    color: inherit;
-    text-decoration: underline;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 4px;
-    text-decoration-color: var(--soft);
-    transition: text-decoration-color .2s;
-  }
-  a:hover, a:focus-visible { text-decoration-color: currentColor; }
-  a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; border-radius: 2px; }
-</style>
+<link rel="preload" href="fonts/gabarito.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="site.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Organization","name":"Froge","legalName":"Froge, LLC","url":"https://frogegames.com/","email":"dean@frogegames.com","description":"A small game studio in California."}
+</script>
 </head>
 <body>
 <div class="bursts" aria-hidden="true"></div>
 <main>
   <div class="logo" role="img" aria-label="Froge"><span class="froge-logo" aria-hidden="true"><span class="strut"></span>frog<span class="e">e</span><span class="dot"><svg class="layer layer-sea" viewBox="0 0 100 100"><path fill="#a6e3d0" transform="translate(-11 -10)" d="M42 4C60 6 96 22 97 48C98 62 80 96 50 97C28 98 2 80 3 56C4 40 22 2 42 4Z"/></svg><svg class="layer layer-orange" viewBox="0 0 100 100"><path fill="#f25c33" transform="translate(11 10)" d="M42 4C60 6 96 22 97 48C98 62 80 96 50 97C28 98 2 80 3 56C4 40 22 2 42 4Z"/></svg><svg class="layer layer-white" viewBox="0 0 100 100"><path fill="currentColor" d="M42 4C60 6 96 22 97 48C98 62 80 96 50 97C28 98 2 80 3 56C4 40 22 2 42 4Z"/></svg><span class="froge-period-hit"></span></span></span></div>
+  <div class="intro">
+    <h1>Froge is a small game studio in California.</h1>
+    <p class="lede">We're making games with our favorite people.</p>
+    <p>Say hello: <a href="mailto:dean@frogegames.com">dean@frogegames.com</a></p>
+  </div>
+  <div class="score" aria-hidden="true"><div>Pulls<b id="p" class="sea">000</b></div><div>Blobs<b id="b">000</b></div></div>
+  <footer class="site-foot"><span>© 2026 Froge, LLC</span><a href="privacy.html">Privacy</a></footer>
 </main>
 <script src="froge.js"></script>
+<script>(function(){"use strict";
+  function pad(n) { return ("00" + n).slice(-3); }
+  function flash(el, n) { el.textContent = pad(n); el.classList.add("hit"); setTimeout(function () { el.classList.remove("hit"); }, 420); }
+  function onPull(n) { flash(document.getElementById("p"), n); }
+  function onBlob(n) { flash(document.getElementById("b"), n); }
+  var pulls = 0, blobs = 0, sx = 0, sy = 0, down = false;
+  var hit = document.querySelector(".froge-period-hit"), mainEl = document.querySelector("main");
+  hit.addEventListener("pointerdown", function (e) { down = true; sx = e.clientX; sy = e.clientY; });
+  addEventListener("pointerup", function (e) {
+    if (!down) return; down = false;
+    if (Math.abs(e.clientX - sx) + Math.abs(e.clientY - sy) > 6) { pulls++; onPull(pulls); }
+  });
+  mainEl.addEventListener("click", function (e) { if (e.target === mainEl) { blobs++; onBlob(blobs); } });
+})();</script>
 </body>
 </html>
