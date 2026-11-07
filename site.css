@@ -186,7 +186,7 @@ main {
 @media (max-width:899px){.logo{margin-top:clamp(0px,calc(100svh - 500px),34svh)}}
 
 /* Home: what we're making. App Store style screens: a swipeable row on smaller screens,
-   all four in the empty right half on wide screens. */
+   big screens beside the intro on wide screens (below). */
 .now { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
 .now-label { font: 400 12px/1.3 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--soft); }
 .now-line { font-size: clamp(18px, 1.5vw, 20px); }
@@ -206,8 +206,27 @@ main {
 .shots::-webkit-scrollbar { display: none; }
 .shots li { scroll-snap-align: start; }
 .shots img { display: block; width: 100%; height: auto; border-radius: 16px; box-shadow: 0 0 0 1px rgba(242, 240, 235, .14); }
+/* Wide screens: the screens sit right of the intro, sized by screen height so they read as
+   real phone screens, not thumbnails. 4, 3 or 2 show, whatever fits at that size. */
 @media (min-width: 1280px) {
-  .now { position: absolute; top: 50%; right: max(var(--pi), env(safe-area-inset-right)); transform: translateY(-50%); width: min(42vw, 720px); }
-  .shots { margin: 0; padding: 0; grid-auto-flow: row; grid-template-columns: repeat(4, 1fr); overflow: visible; }
+  .now {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: calc(var(--pi) + max(clamp(420px, min(40vw, 68vh), 640px), 560px) + 6vw);
+    right: max(var(--pi), env(safe-area-inset-right));
+    gap: 20px;
+    container-type: inline-size;
+  }
+  .now > * {
+    --n: 4;
+    --gap: 16px;
+    --w: min((100cqw - (var(--n) - 1) * var(--gap)) / var(--n), min(58vh, 100vh - 2 * var(--pb) - 240px, 700px) * .4615);
+    width: calc(var(--n) * var(--w) + (var(--n) - 1) * var(--gap));
+    margin-left: auto;
+  }
+  .shots { margin: 0 0 0 auto; padding: 0; grid-auto-flow: row; grid-template-columns: repeat(var(--n), 1fr); gap: var(--gap); overflow: visible; }
   .shots img { border-radius: 12px; }
 }
+@container (max-width: 847px) { .now > * { --n: 3; } .shots li:nth-child(n+4) { display: none; } }
+@container (max-width: 569px) { .now > * { --n: 2; } .shots li:nth-child(n+3) { display: none; } }
